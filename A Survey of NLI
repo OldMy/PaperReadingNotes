@@ -1,0 +1,84 @@
+9.29
+ 	综述：Recent Advances in Natural Language Inference: A Survey of Benchmarks, Resources, and Approaches  6/94
+自然语言推理的最新进展和基准、数据库以及方法的调查
+	Benchmarks and Tasks
+Turing Test(Alan Turing,1950): 图灵测试，测试机器是否具有智能。
+图灵测试在当时因为鼓励机器欺骗人类而被人们批评，没有提供连续的反馈意见来增进发展，并在一些方面不切实际。
+于是许多基准数据集被用来替换图灵测试，以提供训练、测试数据集，评估框架，以及针对各种语言任务的连续数值反馈。
+	An Overview of Existing Benchmarks
+文本蕴含识别(RTE, Recognizing Textual Entailment) Dagan et al.(2005)
+随后NLI benchmarks 爆炸增长
+2005年以来benchmarks增长如下图:
+ 
+可以看出在2015年以前增长缓慢，但是在2015年以后爆炸性增长，并且规模也是越来越大，是深度学习方法成为可能。
+多年来，RTE的挑战一直是推理的主要任务，而RTE的挑战是在机器翻译，问题回答和信息提取的语义处理中遇到的困难
+a)	Reference Resolution
+引用解析是识别引用对象（通常是一段文本中的语言提及）的过程，该引用是代词或短语所指的特定表达。
+Winograd Schema Challenge（WSC,By Winograd 1972------Morgenstern 2016）
+Challenge:回答一个问题，系统必须消除其代词的歧义，可以通过替换句子中的单个词来进行更改。
+因此语言环境通常在消除代词歧义上没有用，需要的是外部知识。
+第一个数据库：只包含了60个测试样例（Morgenstern 2016）
+WinoGrande 来源于WSC中发现的bias（2018），在2019年Sakguchi创建了WinoGrande, 这是该问题的大规模对抗版本，主要关注物理学和心理学，包含了近44000个例子，困难程度是一样的。
+
+10.5 8/94
+
+a)	Question Answering
+许多基准模型没有提供一个重点的语言处理任务，像是参考解析，而是在单个任务中提供了语言处理和推理技巧的更全面的组合。
+QA：提供一段文本，要求系统回答关于文本的问题，一次证明系统对文章的理解。
+现如今在NLP中的QA已经做的很好，现在的很多QA基准模型不是所有的都需要额外知识，很多基准可以不用深度理解，使用上下文信息就可以解决。
+而有些基准是必须要额知识的，如WCScript (Ostermann et al., 2018),CoQA(Reddy, Chen, & Manning, 2018), OpenBookQA (Mihaylov,
+Clark, Khot, & Sabharwal, 2018)，在这些基准里，常识会对解决问题非常有效。
+ 
+
+还有其他的基准是需要超出文本的推理能力。如SQuAD2.0，包含了无法回答的问题，这就需要系统对文本进行深度的推理。
+QA benchmarks:
+MCTest(Richardson, Burges, and Renshaw 2013)，500 fictional stories and 2000 multiple-choice questions which require outside knowledge and varioes type of reasoning to answer. 超过一半的问题都需要至少一句话回答。所以系统必须从多个位置综合信息，为不是使浅层曾匹配技术解决
+RACE(The Reading Comprehension Dataset from Examinations, Lai, Xie, Liu, Yang, and Hovy 2017 ), 98000 multiple-choice reading comprehension questions over 28000 passages from middle & high school English exams. 
+NarrativeQA(Kociský et al. 2018),1500 full stories and movies scripts paired with human-written summaries, 47000 human-written questions and answers based on the summaries. 且提出了两个开放式任务，1、回答和原始故事与剧本匹配的问题；2回答和总结匹配的问题。回答与原始故事剧本匹配的问题这个任务会更加的有挑战性。
+ARC(The AI2 Reasoning Challenge, Clark, Cowhey, Etzioni, Khot, Sabharwal,
+Schoenick, and Tafjord 2018), 8000 four-way multiple-choice science questions and answers, 还有一个14 million 规模的科学相关的句子数据集，包含了大部分需要用来回答问题的信息。由于很多问答系统需要从多个句子中收集信息才能正确回答问题，所以简单的根据keywords搜索匹配是不可能正确解决的，此任务鼓励进行大量知识的推理
+MCRcript(Ostermann et al. 2018), 14000 2-way mulyiple-choice questions based on short passages, 他的大部分问题可以通过纯常识回答，即不需要文本。
+ 
+ProPara(Mishra, Huang, Tandon, Yih, and Clark 2018), 488 注释的过程段落。这些段落描述了各种各样的过程。如光合作用，水电作用等等，目的是为了系统学习在涉及状态变化的过程中学习对象跟踪。作者认为，如果系统理解了这个段落，那么就能够回答关于这个段落中实体的状态变化的任何问题。
+MultiRC(Khashabi, Chaturvedi, Roth, Upadhyay, and Roth 2018), 是一个于都理解数据集，10 000 questions posed on over 800 paragraphs across a variety of topic domains. 和传统的阅读理解数据集不同的是，这里面的大多数问题只能通过推理多个句子来回答，且答案不是文中的片段，答案选择的数量和正确答案的数量是可变的。所以浅层匹配效果不可能好，激励系统去深入理解文章。
+ARCT(The Argument Reasoning Comprehension Task, Habernal, Wachsmuth,
+Gurevych, and Stein 2018 )，论据推理任务，数据来源于在线的新闻评论，要求系统给出两个论据中正确的一个去支持论点。这个任务中也是需要外部知识的。
+SQuAD(Rajpurkar, Zhang, Lopyrev, and Liang 2016),100 000 questions posed on passages from Wikipedia articles, which are provided with the questions. SQuAD1.0版本中不需要外部知识，答案是文章中的片段，可以基于上下文信息寻找答案。SQuAD2.0(Rajpurkar et al., 2018)在1.0 的基础上增加了5 000个根据文章无法回答的问题，这就要求系统能够推理出文章能给出什么信息，什么是无法给出的，需要深度理解文章。
+CoQA(The Conversational Question Answering, Reddy et al. 2018), 包含了文章，和对话形式的一连串问题，提供了答案和依据。127 000 questions, 需要额外知识。
+看书C++ Primer Plus
+刷题*4
+12/94
+QuAC(Question Answering in Context, Choi, He, Iyyer, Yatskar, Yih, Choi, Liang, and Zettlemoyer 2018), a similar but larger 对话问答基准，98 000 questions over nearly 14 000 dialogs about nearly 9 000 passages. 答案是文本的片段。在CoQA中答案是文本范围内的合理抽象的。
+OpenBookQA(Mihaylov et al. 2018), 目的是解决当前QA数据集的一些缺点。
+早期的数据集经常是不需要外部知识和推理的，而需要需要大量外部知识的领域又很难获得。数据集包含6 000 4-way multiple-choice science questions which may require science facts(common knowledge) or commonsense knowledge. 提供了1 300个科学事实，与对应的问题直接相关联，来支持回答问题。
+CommonsenseQA(Talmor, Herzig, Lourie, and Berant 2019), 是直接针对常识知识的基准，9 500 three-way multiple-choice questions. 每个问题都要求系统将目标概念和其他三个有联系的概念区别开来，这保证了回答问题必须要常识知识的帮助。利用像ConceptNet这样的大型通用知识图，不仅可以确保问题直接针对常识关系，而且可以确保问题所需的常识知识领域在日常使用中相当全面。
+DREAM(The Dialogue-Based Reading Comprehension Examination, Sun, Yu,
+Chen, Yu, Choi, and Cardie 2019), 目标也在于对外部知识的运用，about 10 000 multiple-choice questions posed on about 6 500 selections of dialogue between multiple parties. 答案不能直接从文本中得出，且将需要多句话的推理。
+DROP(The Discrete Reasoning Over Paragraphs, Dua, Wang, Dasigi,
+Stanovsky, Singh, and Gardner 2019), 100 000questions over 7 000 passages from Wikipedia. 和之前相似的基准不同的是，在本数据集中的问题小球系统使用各种推理，包括算数（加减、比较等）
+Cosmos QA（Commonsense Machine Comprehension, Huang, Bras, Bhagavatula, & Choi, 2019）, 35 600 multiple-choice reading comprehension questions, 问题要求外部知识和推理技巧，有些问题无法回答。正确答案不直接出现在文本中。94%的问题需要常识知识，这个比例是最高的。
+MC-TACO（The Multiple Choice Temporal Common-sense, Zhou,
+Khashabi, Ning, and Roth 2019）, 1 900 multiple-choice questions, 需要关于时间的时间属性的常识，例如事件的持续时间，频率和顺序。这是没有被重视的常识。问题可以有多个正确答案。
+C++ Primer Plus
+10.7 看论文Discourse Marker Augmented Network with Reinforcement Learning for
+Natural Language Inference
+做报告PPT
+10.8 综述    /94
+		b)   Textual Entaliment(文本蕴含)
+Textual Entaliment由Dagan于2005年定义，描述文本（前提和假设）之间的逻辑关系，如果从一个前提能得出一个假设是对的，就说是这个前提包含
+了假设。这个任务和QA一样也需要集中简单的语言处理技能，如命名实体识别和共指解析。
+RTE Challenges (The Recognizing Textual Entailment), 提出了文本蕴含任务，评估机器对普通背景知识和推理能力的获取，这些是人类判断文本是否蕴含的条件。从2005年文本蕴含首次提出以后，越来越多向此的挑战被提出，到2008、09年演变成了三分类，增加了矛盾关系。数据集从1 000个样例增加到49 000。
+Conversational Entailment（Zhang and Chai 2009）（Zhang and Chai 2010）, 875个蕴含对，每个对包含了来自自然语言对话中的前提和需要解释对话的假设，许多示例都需要预测说话者的信念、愿望和意图，这需要从对话的北京进行推理。
+SICK(The Sentences Involving Compositional Knowledge, Marelli et al.
+2014a)，10 000对句子，提出了连个任务，蕴含任务和无关任务。
+SNLI(The Stanford Natural Language Inference, Bowman et al. 2015 ), 600 000个句子对，3-way decision task, 数据集可信度有保证。后以同样的格式被扩充为MultiNLI, 有被扩充为GLUE。
+SciTail(Khot et al. 2018), 27 000个前提-假设句子对，基于科学问题的，需要特殊知识背景。
+SherLIiC（Schmitt and Schütze 2019）,用于语境中的词汇推理，认为当前的基准缺乏对词之间关系的关注，这是当前最好系统的困境。本数据库关注事件和位于之间的蕴含关系。 包含了960 000推理规则候选组成，来自知识图的关系对。
+b)	Plausible Inference
+COPA(The Choice of Plausible Alternatives, Roemmele et al. 2011), 评估事件之间的因果推理，要求掌握经常会发生的事情的常识知识。每个示例都提供了一个前提，并且可以从两个选择中寻求正确的原因或结果，从而测试向后或向前的因果推理。1 000个样例。
+CBT(The Children’s Book Test, Hill, Bordes, Chopra, and Weston 2015 ), 687 000 cloze-style questions about 20-sentence stories mined form publicly available children’s book. 每个问题都需要从10个候选词中挑一个出来完成新一行的填空。问题可以根据缺失的词分成四类别：named entity, common noun, verb, or preposition. 
+ROCStories(Mostafazadeh et al. 2016), about 50 000 five-sentence everyday life stories. 包含了时间的因果关系和时间关系，用来学习常识知识非常合适。在故事的最后提供了一个合理的结局和不合理的结局。
+LAMBADA（The Language Modeling Broadened to Account for Discourse Aspects，Paperno, Kruszewski, Lazaridou, Pham, Bernardi, Pezzelle, Baroni, Boleda, and Fernandez 2016），10 000 passages from BookCorpus, 在文章的最后一个句子，缺失了一个目标词，和CBT有些相似，但也有不同。比如缺失的词总是最后一句话的最后一个词。而且没有候选词，而最重要的是目标词可以通过推理得出。且目标词没有上下文是推理不出的，这保证了模型必须对整个段落进行推理才能做出正确答案。
+JOCI（The JHU (John Hopkins University) Ordinal Commonsense Inference， Zhang et al. 2017），39 000 sentence pairs, each consisting of a context and
+hypothesis. 系统要做的是给出这个假设成立的程度（1-5），1是最不可能的，5是最可能的。和SNLI和其他的3分类相似，知识提供了在蕴含和矛盾之间的更细的类别。
+CLOTH(The Cloze Test by Teachers, Xie, Lai, Dai, and Hovy 2017), 100 000 4-way multiple-choice cloze-style questions from middle&high school-level English language exams. 
